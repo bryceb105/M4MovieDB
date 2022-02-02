@@ -24,6 +24,7 @@ namespace M4MovieDB.Models
         public string Rating { get; set; }
         public bool Edited { get; set; }
         public string LentTo { get; set; }
+        [Range(0,25)]
         public string Notes { get; set; }
     }
 }
