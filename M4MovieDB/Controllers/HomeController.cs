@@ -69,7 +69,7 @@ namespace M4MovieDB.Controllers
 
             return View(applications);
         }
-
+        //set up edit function
         [HttpGet]
         public IActionResult Edit (int MovId)
         {
@@ -80,7 +80,7 @@ namespace M4MovieDB.Controllers
 
             return View("MovieInput", application);
         }
-
+        // edit entry
         [HttpPost]
         public IActionResult Edit (Movie info)
         {
@@ -89,7 +89,7 @@ namespace M4MovieDB.Controllers
 
             return RedirectToAction("MovieList");
         }
-
+        //set up delete
         [HttpGet]
         public IActionResult Delete (int MovId)
         {
@@ -97,7 +97,7 @@ namespace M4MovieDB.Controllers
 
             return View(application);
         }
-
+        //delete entry
         [HttpPost]
         public IActionResult Delete(Movie mov)
         {

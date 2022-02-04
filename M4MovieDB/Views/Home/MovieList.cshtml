@@ -5,7 +5,7 @@
 @model List<Movie>
 
 <table class="table table-bordered table-striped">
-
+    @*Create table headings*@
     <thead class="font-weight-bold">
         <tr>
             <td>Category</td>
@@ -17,7 +17,7 @@
             <td>Edited</td>
         </tr>
     </thead>
-
+    @*create table inputs*@
     <tbody>
         @foreach (var x in Model)
             {

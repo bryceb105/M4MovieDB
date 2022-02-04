@@ -8,7 +8,7 @@
 @*input form*@
 <div>
     <form method="post">
-
+        @*separate category with ID's to save space*@
         <label asp-for="Category">Category:</label>
         <select asp-for="CategoryId">
             <option value="Select a Category">Select a Category</option>
@@ -47,14 +47,14 @@
             <option value="R">R</option>
         </select>
         <br />
-
+        @*Go back and edit entry*@
         <label asp-for="Edited">Edited:</label>
         <select asp-for="Edited">
             <option value="true">Yes</option>
             <option value="false">No</option>
         </select>
         <br />
-        <input type="hidden" asp-for="MovieId"/>
+        <input type="hidden" asp-for="MovieId" />
 
         <button type="submit">Submit Movie Addition</button>
     </form>

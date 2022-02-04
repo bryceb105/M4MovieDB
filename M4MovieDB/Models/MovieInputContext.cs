@@ -20,6 +20,7 @@ namespace M4MovieDB.Models
 
         // seed new movies
         protected override void OnModelCreating(ModelBuilder mb)
+        //set category ID's = Categories
         {
             mb.Entity<Category>().HasData(
                 new Category { CategoryId = 1, CategoryName = "Action/Adventure" },
