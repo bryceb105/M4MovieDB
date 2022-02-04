@@ -1,5 +1,6 @@
 ﻿using M4MovieDB.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -11,12 +12,10 @@ namespace M4MovieDB.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-        private MovieInputContext _blahContext { get; set; }
-        public HomeController(ILogger<HomeController> logger, MovieInputContext someName)
+        private MovieInputContext _MiContext { get; set; }
+        public HomeController(MovieInputContext someName)
         {
-            _logger = logger;
-            _blahContext = someName;
+            _MiContext = someName;
         }
 
         //index page view
@@ -29,22 +28,26 @@ namespace M4MovieDB.Controllers
         [HttpGet]
         public IActionResult MovieInput()
         {
-            return View();
+            ViewBag.Category = _MiContext.Category.ToList();
+
+            return View(new Movie());
         }
 
         //post results if valid
         [HttpPost]
         public IActionResult MovieInput(Movie ar)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid) //if valid
             {
-                _blahContext.Add(ar);
-                _blahContext.SaveChanges();
+                _MiContext.Add(ar);
+                _MiContext.SaveChanges();
 
                 return View("Confirmation", ar);
             }
-            else
+            else //if invalid
             {
+                ViewBag.Category = _MiContext.Category.ToList();
+
                 return View(ar);
             }
         }
@@ -55,10 +58,53 @@ namespace M4MovieDB.Controllers
             return View();
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        //Movie List (of database)
+        [HttpGet]
+        public IActionResult MovieList()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            var applications = _MiContext.responses
+                .Include(x => x.Category)
+                .OrderBy(x => x.Title)
+                .ToList();
+
+            return View(applications);
+        }
+
+        [HttpGet]
+        public IActionResult Edit (int MovId)
+        {
+
+            ViewBag.Category = _MiContext.Category.ToList();
+
+            var application = _MiContext.responses.Single(x => x.MovieId == MovId);
+
+            return View("MovieInput", application);
+        }
+
+        [HttpPost]
+        public IActionResult Edit (Movie info)
+        {
+            _MiContext.Update(info);
+            _MiContext.SaveChanges();
+
+            return RedirectToAction("MovieList");
+        }
+
+        [HttpGet]
+        public IActionResult Delete (int MovId)
+        {
+            var application = _MiContext.responses.Single(x => x.MovieId == MovId);
+
+            return View(application);
+        }
+
+        [HttpPost]
+        public IActionResult Delete(Movie mov)
+        {
+            _MiContext.responses.Remove(mov);
+            _MiContext.SaveChanges();
+
+            return RedirectToAction("MovieList");
         }
     }
 }

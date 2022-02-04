@@ -13,18 +13,31 @@ namespace M4MovieDB.Models
         {
             // left blank for now
         }
+
         // create set of data
         public DbSet<Movie> responses { get; set; }
+        public DbSet<Category> Category { get; set; }
 
         // seed new movies
         protected override void OnModelCreating(ModelBuilder mb)
         {
+            mb.Entity<Category>().HasData(
+                new Category { CategoryId = 1, CategoryName = "Action/Adventure" },
+                new Category { CategoryId = 2, CategoryName = "Comedy" },
+                new Category { CategoryId = 3, CategoryName = "Drama" },
+                new Category { CategoryId = 4, CategoryName = "Family" },
+                new Category { CategoryId = 5, CategoryName = "Horror/Suspense" },
+                new Category { CategoryId = 6, CategoryName = "Miscellaneous" },
+                new Category { CategoryId = 7, CategoryName = "Television" },
+                new Category { CategoryId = 8, CategoryName = "VHS" }
+                );
+
             mb.Entity<Movie>().HasData(
 
                 new Movie
                 {
                     MovieId = 1,
-                    Category = "Comedy",
+                    CategoryId = 2,
                     Title = "Meet the Parent",
                     Year = 2000,
                     Director = "Jay Roach",
@@ -37,7 +50,7 @@ namespace M4MovieDB.Models
                 new Movie
                 {
                     MovieId = 2,
-                    Category = "Action",
+                    CategoryId = 1,
                     Title = "Avergers",
                     Year = 2012,
                     Director = "Anthony Russo",
@@ -50,7 +63,7 @@ namespace M4MovieDB.Models
                 new Movie
                 {
                     MovieId = 3,
-                    Category = "Documentary",
+                    CategoryId = 6,
                     Title = "Free Solo",
                     Year = 2018,
                     Director = " Jimmy Chin",
