@@ -16,6 +16,7 @@ namespace M4MovieDB.Models
 
         // create set of data
         public DbSet<Movie> responses { get; set; }
+        public object Responses { get; internal set; }
         public DbSet<Category> Category { get; set; }
 
         // seed new movies

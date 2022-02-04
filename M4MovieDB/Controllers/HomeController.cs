@@ -76,9 +76,9 @@ namespace M4MovieDB.Controllers
 
             ViewBag.Category = _MiContext.Category.ToList();
 
-            var application = _MiContext.responses.Single(x => x.MovieId == MovId);
+            var movie = _MiContext.responses.Single(x => x.MovieId == MovId);
 
-            return View("MovieInput", application);
+            return View("MovieInput", movie);
         }
 
         [HttpPost]
